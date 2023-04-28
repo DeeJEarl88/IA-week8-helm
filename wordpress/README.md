@@ -31,7 +31,41 @@ As you debug, you may need to install and uninstall the chart a few times until 
 - [ ] Copy the command you used, and the output generated and paste it below:
 
 ```
-paste the command and output here
+helm install -f values.yaml first-release oci://registry-1.docker.io/bitnamicharts/wordpress
+Pulled: registry-1.docker.io/bitnamicharts/wordpress:16.0.1
+Digest: sha256:2d096bf39cd4c0aaccc3c6bab3d870da8462392dff9d17d627c2610c9fdfa529
+NAME: first-release
+LAST DEPLOYED: Thu Apr 27 19:59:20 2023
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+CHART NAME: wordpress
+CHART VERSION: 16.0.1
+APP VERSION: 6.2.0
+
+** Please be patient while the chart is being deployed **
+
+Your WordPress site can be accessed through the following DNS name from within your cluster:
+
+    first-release-wordpress.default.svc.cluster.local (port 80)
+
+To access your WordPress site from outside the cluster follow the steps below:
+
+1. Get the WordPress URL by running these commands:
+
+   export NODE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services first-release-wordpress)
+   export NODE_IP=$(kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}")
+   echo "WordPress URL: http://$NODE_IP:$NODE_PORT/"
+   echo "WordPress Admin URL: http://$NODE_IP:$NODE_PORT/admin"
+
+2. Open a browser and access WordPress using the obtained URL.
+
+3. Login with the following credentials below to see your blog:
+
+  echo Username: derek
+  echo Password: $(kubectl get secret --namespace default first-release-wordpress -o jsonpath="{.data.wordpress-password}" | base64 -d)
 ```
 
 - [ ] Using `minikube service list`, get the URL to your application. 
@@ -45,7 +79,8 @@ paste the command and output here
 - [ ] Copy the command you used, and the output generated and paste it below:
 
 ```
-paste the command and output here
+helm uninstall first-release
+release "first-release" uninstalled
 ```
 
 ## Next up
