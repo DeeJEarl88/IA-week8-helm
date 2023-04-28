@@ -1,1 +1,11 @@
-# Add your custom values here:
+wordpressUsername: "derek"
+wordpressPassword: "password"
+wordpressEmail: "dearl@student.cscc.edu"
+wordpressFirstName: "Derek"
+wordpressLastName: "Earl"
+wordpressBlogName: "Helm intro"
+service:
+  type: NodePort
+  nodePorts:
+    http: 30080
+    https: 30443
